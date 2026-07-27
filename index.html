@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>presidential primary results progress bar</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+
+</head>
+
+<style>
+    body {
+        font-family: 'Libre Franklin', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+
+        <div id="percentage">Loading...</div>
+    <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
+  <script>
+    var pymChild = new pym.Child();
+    // Function to update the percentage
+    function updatePercentage() {
+      // Make an AJAX request to get the latest data
+      fetch('data/progress.json')
+        .then(response => response.json())
+        .then(data => {
+          // Calculate the percentage
+          const pct = ((data['Number of Precincts reporting'][0] / data['Total number of precincts voting for the office'][0]) * 100).toFixed(2);
+          // Update the percentage on the page
+          document.getElementById('percentage').innerText = `Percentage of precincts reporting: ${pct}%`;
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  
+    // Call updatePercentage initially and set interval to update every 5 seconds
+    updatePercentage();
+    setInterval(updatePercentage, 5000); // Update every 5 seconds
+  </script>
+  <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
+  <script>
+      var pymChild = new pym.Child();
+  </script>
+  </body>
+</html>
