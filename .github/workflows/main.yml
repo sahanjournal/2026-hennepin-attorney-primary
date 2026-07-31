@@ -3,7 +3,7 @@ name: Update Hennepin attorney results
 on:
   schedule:
     # Update this schedule as needed
-    - cron: "0 0 * * *"
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
 
@@ -58,9 +58,14 @@ jobs:
 
           git add output/hennepin_attorney_2026.csv
 
-          if git diff --cached --quiet; then
-            echo "Dataset has not changed."
-          else
-            git commit -m "Update Hennepin County attorney results"
-            git push
+           if git diff --cached --quiet; then
+              echo "Dataset has not changed."
+            else
+              UPDATED_AT=$(TZ="America/Chicago" date "+%Y-%m-%d %I:%M:%S %p %Z")
+
+              echo "$UPDATED_AT" > output/last_updated.txt
+              git add output/last_updated.txt
+
+              git commit -m "Update election results: $UPDATED_AT"
+              git push
           fi
