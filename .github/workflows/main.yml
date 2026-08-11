@@ -3,7 +3,7 @@ name: Update Hennepin attorney results
 on:
   schedule:
     # Update this schedule as needed
-    - cron: "15 * * * *"
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
 
